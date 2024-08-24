@@ -78,22 +78,18 @@ const Spreadsheet: React.FC = () => {
   const [search, setSearch] = useState<string>("");
 
   const handleInputChange = (id: string, value: string) => {
-    // Retrieve the current cell state or initialize a new one if it doesn't exist
     const cell = cells[id] || { value: "", alignment, fontSize, isNumeric, isHighlighted: false };
   
-    // Check if the cell is supposed to be numeric and if the input value is not a number
     if (cell.isNumeric && isNaN(Number(value))) {
-      return; // Exit the function without updating if the input is not a valid number
+      return;
     }
   
-    // Update the cell with the new value and compute if it should be highlighted
     setCell(id, {
       ...cell,
       value,
-      isHighlighted: !!searchQuery && value.includes(searchQuery), // Ensure isHighlighted is always boolean
+      isHighlighted: !!searchQuery && value.includes(searchQuery),
     });
   };
-  
 
   const handleFormatChange = (id: string) => {
     const cell = cells[id] || { value: "", alignment, fontSize, isNumeric, isHighlighted: false };
@@ -105,15 +101,13 @@ const Spreadsheet: React.FC = () => {
     setSearch(query);
     setSearchQuery(query);
 
-    // Highlight matching cells
     Object.entries(cells).forEach(([id, cell]) => {
-        setCell(id, { ...cell, isHighlighted: !!query && cell.value.includes(query) });
+      setCell(id, { ...cell, isHighlighted: !!query && cell.value.includes(query) });
     });
-};
-
+  };
 
   const handlePageChange = (newPage: number) => {
-    if (newPage >= 0 && newPage * rowsPerPage < 1000) { // Assuming a grid of 1000 cells, adjust if needed
+    if (newPage >= 0 && newPage * rowsPerPage < 1000) {
       setPage(newPage);
     }
   };
@@ -133,7 +127,7 @@ const Spreadsheet: React.FC = () => {
           padding: '8px',
           boxSizing: 'border-box',
           minHeight: '40px',
-          backgroundColor: cell.isHighlighted ? 'yellow' : 'white',  // Highlight cell if matches search
+          backgroundColor: cell.isHighlighted ? 'yellow' : 'white',
         }}
         className="resize-none"
         onKeyPress={(e: KeyboardEvent) => {
@@ -159,39 +153,45 @@ const Spreadsheet: React.FC = () => {
   return (
     <div className="flex flex-col h-screen">
       <div className="p-4 bg-gray-200 border-b flex flex-col">
-        <div className="flex items-center justify-between mb-2">
-          <div className="flex items-center">
-            <button onClick={undo} className="px-4 py-2 bg-blue-500 text-white rounded mr-2">Undo</button>
-            <button onClick={redo} className="px-4 py-2 bg-green-500 text-white rounded">Redo</button>
+        <div className="flex flex-col md:flex-row items-start md:items-center md:justify-between mb-2">
+          <div className="flex mb-2 md:mb-0 md:mr-2">
+            <button onClick={undo} className="px-4 py-2 bg-blue-500 text-white rounded mr-2 text-sm sm:text-base">Undo</button>
+            <button onClick={redo} className="px-4 py-2 bg-green-500 text-white rounded text-sm sm:text-base">Redo</button>
           </div>
-          <div className="flex items-center space-x-2">
-            <label htmlFor="alignment" className="mr-2">Alignment:</label>
-            <select
-              id="alignment"
-              value={alignment}
-              onChange={(e) => setAlignment(e.target.value as "left" | "center" | "right")}
-              className="border p-1 rounded"
-            >
-              <option value="left">Left</option>
-              <option value="center">Center</option>
-              <option value="right">Right</option>
-            </select>
-            <label htmlFor="fontSize" className="ml-4 mr-2">Font Size:</label>
-            <input
-              id="fontSize"
-              type="number"
-              value={fontSize}
-              onChange={(e) => setFontSize(parseInt(e.target.value, 10))}
-              className="border p-1 rounded w-20"
-            />
-            <label htmlFor="isNumeric" className="ml-4 mr-2">Numeric:</label>
-            <input
-              id="isNumeric"
-              type="checkbox"
-              checked={isNumeric}
-              onChange={() => setIsNumeric(!isNumeric)}
-              className="mr-2"
-            />
+          <div className="flex flex-col md:flex-row items-start md:items-center space-y-2 md:space-y-0 md:space-x-2">
+            <div className="flex items-center">
+              <label htmlFor="alignment" className="mr-2 text-sm sm:text-base">Alignment:</label>
+              <select
+                id="alignment"
+                value={alignment}
+                onChange={(e) => setAlignment(e.target.value as "left" | "center" | "right")}
+                className="border p-1 rounded text-sm sm:text-base"
+              >
+                <option value="left">Left</option>
+                <option value="center">Center</option>
+                <option value="right">Right</option>
+              </select>
+            </div>
+            <div className="flex items-center">
+              <label htmlFor="fontSize" className="ml-4 mr-2 text-sm sm:text-base">Font Size:</label>
+              <input
+                id="fontSize"
+                type="number"
+                value={fontSize}
+                onChange={(e) => setFontSize(parseInt(e.target.value, 10))}
+                className="border p-1 rounded w-20 text-sm sm:text-base"
+              />
+            </div>
+            <div className="flex items-center">
+              <label htmlFor="isNumeric" className="ml-4 mr-2 text-sm sm:text-base">Numeric:</label>
+              <input
+                id="isNumeric"
+                type="checkbox"
+                checked={isNumeric}
+                onChange={() => setIsNumeric(!isNumeric)}
+                className="mr-2"
+              />
+            </div>
           </div>
         </div>
         <div className="flex items-center mb-2">
@@ -200,28 +200,28 @@ const Spreadsheet: React.FC = () => {
             value={search}
             onChange={handleSearchChange}
             placeholder="Search..."
-            className="border p-2 rounded w-64"
+            className="border p-2 rounded w-full sm:w-64 text-sm sm:text-base"
           />
         </div>
       </div>
       <div className="flex-1 overflow-auto p-4">
-        <div className="grid grid-cols-10 gap-1">
+        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-1">
           {renderGrid()}
         </div>
       </div>
-      <div className="p-4 bg-gray-200 border-t flex items-center justify-between">
+      <div className="p-4 bg-gray-200 border-t flex flex-col md:flex-row items-center justify-between">
         <button
           onClick={() => handlePageChange(page - 1)}
           disabled={page === 0}
-          className="px-4 py-2 bg-blue-500 text-white rounded"
+          className="px-4 py-2 bg-blue-500 text-white rounded mb-2 md:mb-0 text-sm sm:text-base"
         >
           Previous
         </button>
-        <span>Page {page + 1} of {Math.ceil(1000 / rowsPerPage)}</span>  {/* Adjust as needed */}
+        <span className="text-sm sm:text-base">Page {page + 1} of {Math.ceil(1000 / rowsPerPage)}</span>
         <button
           onClick={() => handlePageChange(page + 1)}
           disabled={(page + 1) * rowsPerPage >= 1000}
-          className="px-4 py-2 bg-blue-500 text-white rounded"
+          className="px-4 py-2 bg-blue-500 text-white rounded text-sm sm:text-base"
         >
           Next
         </button>
