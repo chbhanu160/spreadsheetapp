@@ -32,25 +32,25 @@ To run this application locally, follow these steps:
    git clone https://github.com/chbhanu160/spreadsheetapp.git
    cd spreadsheetapp
    
-**Install dependencies:**
-npm install
-Run the development server:
+2. **Install dependencies:**
+   npm install
+   Run the development server:
+   
+   npm run dev
+   Open your browser and navigate to http://localhost:3000 to see the app in action.
 
-npm run dev
-Open your browser and navigate to http://localhost:3000 to see the app in action.
+3. **Usage**
+   Grid Interaction: Click on any cell to edit its content.
+   Formatting Options: Use the toolbar to change text alignment and font size.
+   Data Validation: Ensure specific cells accept only numeric inputs.
+   Search Functionality: Use the search bar to find and highlight cells with matching content.
+   Pagination Controls: Navigate between different pages of the spreadsheet.
+   Undo/Redo: Use the undo and redo buttons to revert or reapply changes.
 
-**Usage**
-Grid Interaction: Click on any cell to edit its content.
-Formatting Options: Use the toolbar to change text alignment and font size.
-Data Validation: Ensure specific cells accept only numeric inputs.
-Search Functionality: Use the search bar to find and highlight cells with matching content.
-Pagination Controls: Navigate between different pages of the spreadsheet.
-Undo/Redo: Use the undo and redo buttons to revert or reapply changes.
-
-**Contributing**
-Contributions are welcome! If you'd like to contribute to this project, please follow these steps:
-Fork the repository.
-Create a new branch (git checkout -b feature-branch).
-Make your changes and commit them (git commit -m 'Add some feature').
-Push to the branch (git push origin feature-branch).
-Open a pull request.
+4. **Contributing**
+   Contributions are welcome! If you'd like to contribute to this project, please follow these steps:
+   Fork the repository.
+   Create a new branch (git checkout -b feature-branch).
+   Make your changes and commit them (git commit -m 'Add some feature').
+   Push to the branch (git push origin feature-branch).
+   Open a pull request.
